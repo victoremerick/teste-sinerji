@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Minha Aplicação</title>
+</h:head>
+<h:body>
+    <h1>Bem-vindo à Minha Aplicação</h1>
+    <p>Clique no link abaixo para acessar a página de cadastro de pessoa:</p>
+    <h:link outcome="/cadastroPessoa.xhtml" value="Cadastro de Pessoa" />
+    <h:link outcome="/listarPessoas.xhtml" value="Listar Pessoas" />
+    <h:link outcome="/visualizarPessoa.xhtml">
+        <f:param name="enderecoId" value="1" />
+        <h:outputText value="Visualizar Pessoa" />
+    </h:link>
+</h:body>
+</html>

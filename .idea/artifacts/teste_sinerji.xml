@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="teste-sinerji">
+    <output-path>$PROJECT_DIR$/out/artifacts/teste_sinerji</output-path>
+    <root id="archive" name="teste-sinerji.war" />
+  </artifact>
+</component>
