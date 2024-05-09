@@ -4,8 +4,12 @@ import br.victoremerick.testesinerji.facade.PessoaDAO;
 import br.victoremerick.testesinerji.model.Pessoa;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,9 +17,11 @@ import java.util.Date;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ListarPessoasBean implements Serializable {
     private PessoaDAO pessoaController;
+
+    private Pessoa itemSelecionadoParaExclusao;
     private List<Pessoa> pessoas = new ArrayList<>();
 
     @PostConstruct
@@ -47,6 +53,33 @@ public class ListarPessoasBean implements Serializable {
         }
 
         return anos + " anos";
+    }
+
+    public void editar(Pessoa pessoa){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("cadastroPessoa.xhtml?pessoaId="+pessoa.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void detalhar(Pessoa pessoa){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("visualizarPessoa.xhtml?pessoaId="+pessoa.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluir(Pessoa itemSelecionadoParaExclusao) {
+        if (itemSelecionadoParaExclusao != null) {
+            pessoaController.delete(itemSelecionadoParaExclusao);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listarPessoas.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

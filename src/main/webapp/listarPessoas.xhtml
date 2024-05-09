@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Listar Pessoas</title>
-</h:head>
-<h:body>
-    <h1>Listagem de Pessoas</h1>
-    <p:dataTable value="#{listarPessoasBean.pessoas}" var="pessoa">
-        <p:column headerText="Nome">
-            <h:outputText value="#{pessoa.nome}" />
-        </p:column>
-        <p:column headerText="Idade">
-            <h:outputText value="#{listarPessoasBean.calcularIdade(pessoa.idade)}" />
-        </p:column>
-        <p:column headerText="Sexo">
-            <h:outputText value="#{pessoa.sexo}" />
-        </p:column>
-        <p:column headerText="Ação">
-            <h:link outcome="/visualizarPessoa.xhtml">
-                <f:param name="pessoaId" value="#{pessoa.id}" />
-                <h:outputText value="Ver Pessoa" />
-            </h:link>
-        </p:column>
-    </p:dataTable>
-</h:body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <h1>Listagem de Pessoas</h1>
+            <h:form id="formPessoa">
+                <p:dataTable value="#{listarPessoasBean.pessoas}" var="pessoa">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{pessoa.nome}" />
+                    </p:column>
+                    <p:column headerText="Idade">
+                        <h:outputText value="#{listarPessoasBean.calcularIdade(pessoa.idade)}" />
+                    </p:column>
+                    <p:column headerText="Sexo">
+                        <h:outputText value="#{pessoa.sexo}" />
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Editar" action="#{listarPessoasBean.editar(pessoa)}" />
+                        <p:commandButton value="Visualizar" action="#{listarPessoasBean.detalhar(pessoa)}" />
+                        <p:commandButton value="Deletar" action="#{listarPessoasBean.excluir(pessoa)}" update="formPessoa">
+                            <p:confirm header="Confirmação" message="Você tem certeza?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
